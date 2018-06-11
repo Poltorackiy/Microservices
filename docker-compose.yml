@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  microservices.netcore:
+    image: ${DOCKER_REGISTRY}microservicesnetcore
+    build:
+      context: .
+      dockerfile: Microservices.NetCore/Dockerfile

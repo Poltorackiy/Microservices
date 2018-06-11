@@ -1,0 +1,1 @@
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
