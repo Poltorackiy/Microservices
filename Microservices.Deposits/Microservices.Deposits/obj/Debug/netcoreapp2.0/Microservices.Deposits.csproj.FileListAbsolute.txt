@@ -1,0 +1,8 @@
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\bin\Debug\netcoreapp2.0\Microservices.Deposits.deps.json
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\bin\Debug\netcoreapp2.0\Microservices.Deposits.runtimeconfig.json
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\bin\Debug\netcoreapp2.0\Microservices.Deposits.runtimeconfig.dev.json
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\bin\Debug\netcoreapp2.0\Microservices.Deposits.dll
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\obj\Debug\netcoreapp2.0\Microservices.Deposits.csprojAssemblyReference.cache
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\obj\Debug\netcoreapp2.0\Microservices.Deposits.csproj.CoreCompileInputs.cache
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\obj\Debug\netcoreapp2.0\Microservices.Deposits.AssemblyInfoInputs.cache
+C:\Users\Kostya\Desktop\Микросервисы\Microservices\Microservices.Deposits\Microservices.Deposits\obj\Debug\netcoreapp2.0\Microservices.Deposits.AssemblyInfo.cs
