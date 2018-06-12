@@ -48,7 +48,7 @@ namespace Microservices.Deposits.Models
         /// <param name="StartCapital">Первоначальная сумма вложения</param>
         /// <param name="Months">Количество месяцев</param>
         /// <returns></returns>
-        public decimal TotalAmount(decimal StartCapital, int Months)
+        public decimal TotalAmount(decimal StartCapital, int Months)    // Пока не используется
         {
             decimal result = StartCapital;
             for (int i = 0; i < Months; i++)

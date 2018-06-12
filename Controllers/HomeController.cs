@@ -18,6 +18,13 @@ namespace Microservices.Deposits.Controllers
             return View(GetDeposits());
         }
 
+        /// <summary>
+        /// Добавляет новый депозит в список
+        /// </summary>
+        /// <param name="name">Название вклада</param>
+        /// <param name="interestRate">Процентная ставка</param>
+        /// <param name="capitalization">Капитализация процентов</param>
+        /// <returns>Редирект на главную страницу</returns>
         [HttpPost]
         public IActionResult Add(string name, string interestRate, string capitalization)
         {
@@ -35,6 +42,11 @@ namespace Microservices.Deposits.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Удаление депозита из списка
+        /// </summary>
+        /// <param name="guid">Гуид вклада</param>
+        /// <returns>Редирект на главную страницу</returns>
         [HttpPost]
         public IActionResult Delete(string guid)
         {
@@ -68,6 +80,10 @@ namespace Microservices.Deposits.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        /// <summary>
+        /// Получаем список депозитов из XML файла
+        /// </summary>
+        /// <returns></returns>
         private List<Deposit> GetDeposits()
         {
             Stream stream;
@@ -84,14 +100,17 @@ namespace Microservices.Deposits.Controllers
             }
             catch (FileNotFoundException)
             {
+                // Если файла нет, создаем его
                 using (stream = System.IO.File.Create("Deposits.xml")) { }
-                return new List<Deposit>();
+                return deposits;
             }
             catch (Exception)
             {
-                return new List<Deposit>();
+                // Если не удалось прочитать, т.к. файл пуст, или другая ошибка, выдаем пустой список
+                return deposits;
             }
 
+            // Получаем список депозитов из файла через LinQ2XML
             deposits = document.Root.Elements("deposit")
                 .Select(dep => new Deposit
                 {
@@ -101,32 +120,20 @@ namespace Microservices.Deposits.Controllers
                     Guid = Guid.Parse(dep.Element("guid").Value)
                 }).ToList();
                  
-                
-
-
-
-            /*foreach (var element in document.XPathSelectElements("deposits/deposit"))
-            {
-                Deposit deposit = new Deposit();
-                var xName = element.XPathSelectElement("/deposit/name");
-                deposit.Name = element.XPathSelectElement("/deposit/name").Value;
-                deposit.InterestRate = Convert.ToDecimal(element.XPathSelectElement("/deposit/interest_rate").Value.Replace(".", ","));
-                if (element.XPathSelectElement("/deposit/capitalization").Value == "True")
-                    deposit.Capitalization = true;
-                else
-                    deposit.Capitalization = false;
-
-                deposits.Add(deposit);
-            }*/
 
             return deposits;
         }
 
+        /// <summary>
+        /// Сохранение списка депозитов в XML файл
+        /// </summary>
+        /// <param name="deposits"></param>
         private void SaveDeposits(List<Deposit> deposits)
         {
             XDocument document = new XDocument();
             XElement root = new XElement("deposits");
             document.AddFirst(root);
+
             foreach (var deposit in deposits)
             {
                 XElement xDeposit = new XElement("deposit",
