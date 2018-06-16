@@ -84,7 +84,7 @@ namespace Microservices.Deposits.Controllers
         /// Получаем список депозитов из XML файла
         /// </summary>
         /// <returns></returns>
-        private List<Deposit> GetDeposits()
+        public static List<Deposit> GetDeposits()
         {
             Stream stream;
             XDocument document = null;
