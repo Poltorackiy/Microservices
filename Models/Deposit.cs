@@ -42,24 +42,5 @@ namespace Microservices.Deposits.Models
         /// </summary>
         public bool Capitalization { get; set; }
 
-        /// <summary>
-        /// Количество средств после закрытия вклада
-        /// </summary>
-        /// <param name="StartCapital">Первоначальная сумма вложения</param>
-        /// <param name="Months">Количество месяцев</param>
-        /// <returns></returns>
-        public decimal TotalAmount(decimal StartCapital, int Months)    // Пока не используется
-        {
-            decimal result = StartCapital;
-            for (int i = 0; i < Months; i++)
-            {
-                if (Capitalization == true)
-                    result = result + result * InterestRate / 12;
-                else
-                    result = result + StartCapital * InterestRate / 12;
-            }
-            return result;
-        }
-
     }
 }
