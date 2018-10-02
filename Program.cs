@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Microservices.Deposits
 {
@@ -14,7 +15,17 @@ namespace Microservices.Deposits
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .ConfigureServices(services => services.AddAutofac())
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+
+
+            host.Run();
+            //BuildWebHost(args).Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

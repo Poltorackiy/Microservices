@@ -12,13 +12,19 @@ namespace Microservices.Deposits.Controllers
     [Produces("application/json")]
     public class ApiController : Controller
     {
+        string _filepath;
+        public ApiController(IDepositsFilePath depositsFilePath)
+        {
+            _filepath = depositsFilePath.FilePath;
+        }
+
         [HttpGet]
         [Route("api/deposits")]
         public IResponse GetDeposits()
         {
             var depositsResponse = new DepositsResponse
             {
-                Deposits = HomeController.GetDeposits()
+                Deposits = HomeController.GetDeposits(_filepath)
             };
 
             var response = new Response();
@@ -37,7 +43,7 @@ namespace Microservices.Deposits.Controllers
         //[DepositsNotFountExceptionFilter]
         public IResponse GetCalculatorResponse(string guid, decimal amount, int months)
         {
-            var deposits = HomeController.GetDeposits();
+            var deposits = HomeController.GetDeposits(_filepath);
             Guid depositGuid;
 
             if (amount < 0 || months < 0 || Guid.TryParse(guid, out depositGuid))

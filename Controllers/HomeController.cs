@@ -13,9 +13,14 @@ namespace Microservices.Deposits.Controllers
 {
     public class HomeController : Controller
     {
+        string _filepath;
+        public HomeController(IDepositsFilePath depositsFilePath)
+        {
+            _filepath = depositsFilePath.FilePath;
+        }
         public IActionResult Index()
         {
-            return View(GetDeposits());
+            return View(GetDeposits(_filepath));
         }
 
         /// <summary>
@@ -28,7 +33,7 @@ namespace Microservices.Deposits.Controllers
         [HttpPost]
         public IActionResult Add(string name, string interestRate, string capitalization)
         {
-            var deposits = GetDeposits();
+            var deposits = GetDeposits(_filepath);
             Deposit deposit = new Deposit();
             deposit.Name = name;
             // Проверка на стороне клиента. 
@@ -50,7 +55,7 @@ namespace Microservices.Deposits.Controllers
         [HttpPost]
         public IActionResult Delete(string guid)
         {
-            var deposits = GetDeposits();
+            var deposits = GetDeposits(_filepath);
             var deposit = deposits.Where(d => d.Guid == Guid.Parse(guid)).First();
             if (deposit != null)
             {
@@ -84,7 +89,7 @@ namespace Microservices.Deposits.Controllers
         /// Получаем список депозитов из XML файла
         /// </summary>
         /// <returns></returns>
-        public static List<Deposit> GetDeposits()
+        public static List<Deposit> GetDeposits(string filepath)
         {
             Stream stream;
             XDocument document = null;
@@ -92,7 +97,7 @@ namespace Microservices.Deposits.Controllers
 
             try
             {
-                using (stream = System.IO.File.Open("Deposits.xml", FileMode.Open))
+                using (stream = System.IO.File.Open(filepath, FileMode.Open))
                 {
                     document = new XDocument();
                     document = XDocument.Load(stream);
@@ -101,7 +106,7 @@ namespace Microservices.Deposits.Controllers
             catch (FileNotFoundException)
             {
                 // Если файла нет, создаем его
-                using (stream = System.IO.File.Create("Deposits.xml")) { }
+                using (stream = System.IO.File.Create(filepath)) { }
                 return deposits;
             }
             catch (Exception)
@@ -145,7 +150,7 @@ namespace Microservices.Deposits.Controllers
                 root.Add(xDeposit);
             }
 
-            document.Save("Deposits.xml");
+            document.Save(_filepath);
         }
 
     }
